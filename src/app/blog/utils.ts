@@ -1,40 +1,49 @@
 import fs from "fs";
-
 import path from "path";
-
 import matter from "gray-matter";
-
+// get all the mdx files from the dir
 function getMDXFiles(dir: string) {
   return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
 }
-function readMDXFile(filepath: fs.PathOrFileDescriptor) {
-  let rawcontent = fs.readFileSync(filepath, "utf-8");
-
-  return matter(rawcontent);
+// Read data from those files
+function readMDXFile(filePath: fs.PathOrFileDescriptor) {
+  let rawContent = fs.readFileSync(filePath, "utf-8");
+  return matter(rawContent);
 }
-
-function getMDXdata(dir: string) {
+// present the mdx data and metadata
+function getMDXData(dir: string) {
   let mdxFiles = getMDXFiles(dir);
+
   return mdxFiles.map((file) => {
     let { data: metadata, content } = readMDXFile(path.join(dir, file));
     let slug = path.basename(file, path.extname(file));
+
     return {
       metadata,
-      content,
       slug,
+      content,
     };
   });
 }
 
 export function getBlogPosts() {
-  return getMDXdata(path.join(process.cwd(), "src", "app", "blog", "contents"));
+  return getMDXData(path.join(process.cwd(), "src", "app", "blog", "contents"));
+}
+export function getTermsOfServices() {
+  return getMDXData(
+    path.join(process.cwd(), "src", "app", "terms-of-services")
+  );
+}
+export function getPrivacyPolicy() {
+  return getMDXData(path.join(process.cwd(), "src", "app", "privacy-policy"));
 }
 
-export function formatDate(date: string, includeRelative = false) {
+export function formatDate(date: string, includeRelative = true) {
   let currentDate = new Date();
   if (!date.includes("T")) {
     date = `${date}T00:00:00`;
   }
+
   let targetDate = new Date(date);
 
   let yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
@@ -44,22 +53,24 @@ export function formatDate(date: string, includeRelative = false) {
   let formattedDate = "";
 
   if (yearsAgo > 0) {
-    formattedDate += `${yearsAgo}年前`;
+    formattedDate = `${yearsAgo}年前`;
   } else if (monthsAgo > 0) {
-    formattedDate += `${monthsAgo}个月前`;
+    formattedDate = `${monthsAgo}个月前`;
   } else if (daysAgo > 0) {
-    formattedDate += `${daysAgo}天前`;
+    formattedDate = `${daysAgo}日前`;
   } else {
-    formattedDate += "今天";
+    formattedDate = "今日";
   }
 
-  let funDate = targetDate.toLocaleDateString("zh-CN", {
-    year: "numeric",
+  let fullDate = targetDate.toLocaleString("zh-cn", {
     month: "long",
     day: "numeric",
+    year: "numeric",
   });
+
   if (!includeRelative) {
-    return funDate;
+    return fullDate;
   }
-  return `${funDate} ${formattedDate}`;
+
+  return `${fullDate} (${formattedDate})`;
 }
