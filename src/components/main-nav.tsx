@@ -16,49 +16,13 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-const Posts: { title: string; href: string; description: string }[] = [
-  {
-    title: "React",
-    href: "/blog/react",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Vue",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "javascript",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "tailwindcss",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Nextjs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Astro",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
-
-export function MainNav() {
+import { Posts } from "@/lib/contents";
+export function MainNav({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex flex-col items-start justify-start md:flex-row md:items-center md:justify-between md:space-x-4 top-10  z-50  "
+        "flex flex-col items-start justify-start md:flex-row md:items-center md:justify-between pt-10 z-50",
+        className
       )}
     >
       <Link href="/" className=" flex gap-2  font-bold">
@@ -90,14 +54,15 @@ export function MainNav() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-          <div className=" flex items-center justify-between w-20">
-            <ModeToggle />
-            <Link href="/rss">
-              <Icons.rss size={24} />
-            </Link>
-          </div>
         </NavigationMenuList>
       </NavigationMenu>
+      {/* 左边 */}
+      <div className=" flex items-center justify-between w-20">
+        <ModeToggle />
+        <Link href="/rss">
+          <Icons.rss size={24} />
+        </Link>
+      </div>
     </div>
   );
 }

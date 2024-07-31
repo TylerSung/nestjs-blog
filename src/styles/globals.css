@@ -32,7 +32,7 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: #3d3d3d;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -64,6 +64,12 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground flex flex-col min-h-screen;
+  }
+}
+
+@layer components {
+  .SocialIcon {
+    @apply h-6 w-6  text-gray-500 hover:text-gray-700 transition-all   dark:text-gray-400  dark:hover:text-gray-300;
   }
 }
