@@ -5,7 +5,9 @@ const LatestPost = () => {
   let latestPosts = getBlogPosts();
   return (
     <>
-      <h1>最新发布</h1>
+      <h1 className=" inline-block  font-heading  text-2xl font-bold ">
+        最新发布
+      </h1>
       {latestPosts
         .sort((a, b) => {
           if (
@@ -17,7 +19,7 @@ const LatestPost = () => {
         })
         .map((post) => (
           <article key={post.slug} className=" text-wrap max-w-md my-10">
-            <Link href={`/blog/${post.slug}`}>
+            <Link href={`/blog/${post.metadata.category}/${post.slug}`}>
               <h3 className=" font-bold py-2 leading-5 hover:text-blue-500 ">
                 {post.metadata.title}
               </h3>

@@ -9,6 +9,13 @@ import Header from "../../../components/Header";
  * 博客分类页面组件
  * 作用: 展示特定分类下的所有博客文章
  */
+
+export async function generateStaticParams() {
+  let posts = getBlogPosts();
+  return posts.map((post) => ({
+    category: post.metadata.category,
+  }));
+}
 export default function Page({ params }: { params: { category: string } }) {
   // ======= 获取并过滤博客文章 =======
   /**

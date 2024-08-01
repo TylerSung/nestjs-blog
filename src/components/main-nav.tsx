@@ -21,13 +21,13 @@ export function MainNav({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex flex-col items-start justify-start md:flex-row md:items-center md:justify-between pt-10 z-50",
+        "flex  items-center  justify-between  pt-10 z-50",
         className
       )}
     >
-      <Link href="/" className=" flex gap-2  font-bold">
+      <Link href="/" className="flex items-center justify-center gap-2  ">
         <Icons.Logo size={24} />
-        Jax song
+        <span className="font-bold">Tyler song</span>
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
@@ -57,9 +57,9 @@ export function MainNav({ className }: { className?: string }) {
         </NavigationMenuList>
       </NavigationMenu>
       {/* 左边 */}
-      <div className=" flex items-center justify-between w-20">
+      <div className=" flex items-center justify-between gap-2">
         <ModeToggle />
-        <Link href="/rss">
+        <Link href="/rss" className="hidden md:block">
           <Icons.rss size={24} />
         </Link>
       </div>
